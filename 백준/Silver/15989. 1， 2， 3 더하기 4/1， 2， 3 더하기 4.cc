@@ -9,14 +9,14 @@ using namespace std;
 
 
 int main() {
-    int dp[10001][4] = { 0, };
+    int dp[10001][4];
     memset(dp, 0, sizeof(dp));
-    dp[1][1] = 1; // 1
-    dp[2][1] = 1; // 1+1
-    dp[2][2] = 1; // 2
-    dp[3][1] = 1; // 1+1+1
-    dp[3][2] = 1; // 1+2
-    dp[3][3] = 1; // 3
+    dp[1][1] = 1;
+    dp[2][1] = 1;
+    dp[2][2] = 1;
+    dp[3][1] = 1; 
+    dp[3][2] = 1; 
+    dp[3][3] = 1; 
 
 
     for (int i = 4; i <= 10000; i++) {
@@ -31,7 +31,7 @@ int main() {
         int n;
         cin >> n;
 
-        cout << dp[n][1]+ dp[n][2]+ dp[n][3] << "\n";
+        cout << dp[n][1] + dp[n][2] + dp[n][3] << "\n";
     }
 
     return 0;
