@@ -31,7 +31,7 @@ vector<string> solution(vector<string> record) {
                 m[id] = name;
             }
 
-            sol.clear();
+
         }
     //출력
     for(int i=0; i<seq.size(); i++){
