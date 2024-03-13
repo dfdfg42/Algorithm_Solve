@@ -13,10 +13,7 @@ int main()
         cin >> nums[i];
     }
 
-    int end = 0;
-    int start = 0;
-    int sum = 0;
-
+    int end = 0, start = 0,sum = 0;
     int minlength = INT_MAX;
 
     while (end < N) {
