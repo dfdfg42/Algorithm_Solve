@@ -1,36 +1,29 @@
-
-K,N = map(int,input().split())
+K, N = map(int, input().split())
 Data = []
-maxH = 0
-maxN = 0
-def cutting(mid):
-    counting = 0
-    for i in range(len(Data)):
-        counting += Data[i] // mid
-
-    return counting
-
-for  i in range(int(K)):
+for i in range(K):
     height = int(input())
     Data.append(height)
-    maxH = max(maxH,Data[-1])
 
 Data.sort()
 
-start = 1; end = maxH
-mid = (end+start)//2
+def cutting(mid):
+    counting = 0
+    for i in Data:
+        counting += i // mid
+    return counting
 
+def binary_search(start, end, target):
+    if start > end:
+        return end
 
-while start <= end:
-    mid = (end + start) // 2
+    mid = (start + end) // 2
     now = cutting(mid)
-    if now >= N:
-        start = mid + 1
-        maxN = mid
-    elif now < N:
-        end = mid -1
 
+    if now >= target:
+        return binary_search(mid + 1, end, target)  
+    else:
+        return binary_search(start, mid - 1, target) 
 
-print(maxN)
-
-
+maxH = max(Data)
+result = binary_search(1, maxH, N)
+print(result)
