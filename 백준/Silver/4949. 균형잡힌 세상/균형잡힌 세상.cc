@@ -1,90 +1,44 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <climits>
 #include <map>
-#include <string>
 using namespace std;
 
-
+// 괄호의 짝을 확인하는 함수
+bool isValidBracketSequence(const string& input) {
+    vector<char> stack;
+    map<char, char> bracketPairs = {{')', '('}, {']', '['}};
+    
+    for (char ch : input) {
+        if (ch == '(' || ch == '[') {
+            stack.push_back(ch);
+        } else if (ch == ')' || ch == ']') {
+            if (stack.empty() || stack.back() != bracketPairs[ch]) {
+                return false;
+            }
+            stack.pop_back();
+        }
+    }
+    return stack.empty();
+}
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    vector<string> lines;
     vector<bool> answers;
+    string input;
 
     while (true) {
-        string input;
         getline(cin, input);
+        if (input == ".") break;
 
-        if (input == ".") {
-            break;
-        }
-
-        vector<char> brackets;
-        bool flag = true;
-
-        for (int i = 0; i < input.size(); i++) {
-
-            if (input[i] == '(') {
-                brackets.push_back('(');
-            }
-            else if (input[i] == ')') {
-                if (brackets.empty()) {
-                    flag = false;
-                    break;
-                }
-                else if (brackets.back() == '(') {
-                    brackets.pop_back();
-                }
-                else if (brackets.back() != '(') {
-                    flag = false;
-                    break;
-                }
-            }
-            else if (input[i] == '[') {
-                brackets.push_back('[');
-            }
-            else if (input[i] == ']') {
-                if (brackets.empty()) {
-                    flag = false;
-                    break;
-                }
-                else if (brackets.back() == '[') {
-                    brackets.pop_back();
-                }
-                else if (brackets.back() != '[') {
-                    flag = false;
-                    break;
-                }
-            }
-
-        }
-        
-        if (!brackets.empty()) {
-            flag = false;
-        }
-
-        if (flag) {
-            answers.push_back(true);
-        }
-        else {
-            answers.push_back(false);
-        }
+        answers.push_back(isValidBracketSequence(input));
     }
 
-    for (bool a : answers) {
-        if (a == true) {
-            cout << "yes" << '\n';
-        }
-        else {
-            cout << "no" << '\n';
-        }
+    for (bool isValid : answers) {
+        cout << (isValid ? "yes" : "no") << '\n';
     }
-
 
     return 0;
 }
