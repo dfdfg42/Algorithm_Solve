@@ -86,9 +86,7 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
-
     cin >> N >> M;
-
 
 
     mapVec.resize(N+1, vector<int>(N + 1, 0));
@@ -117,11 +115,9 @@ int main() {
     //물 합산
     int result = 0;
     for (int i = 1; i <= N; i++) {
-        for (int j = 1; j <= N; j++) {
-            //cout << mapVec[i][j] << ' ';
+        for (int j = 1; j <= N; j++) {  
             result += mapVec[i][j];
         }
-        //cout << '\n';
     }
 
     cout << result << '\n';
