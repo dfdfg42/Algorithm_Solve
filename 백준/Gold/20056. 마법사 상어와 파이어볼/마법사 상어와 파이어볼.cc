@@ -50,7 +50,7 @@ void moveFireBall() {
 
                     temp[ny][nx].push_back({ ny,nx,mass,speed,dir });
                 }
-                mapVec[i][j].clear();
+
             }
         }
     }
