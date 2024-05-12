@@ -27,21 +27,25 @@ int main() {
     }
 
 
-    vector<int> dist(N + 1, INT_MAX);
+    vector<bool> visited(N+1,false);
+    vector<int> dist(N+1, INT_MAX);
     queue<int> q;
 
-
     q.push(X);
-    dist[X] = 0;  
+    visited[X] = true;
+    dist[X] = 0;
 
     while (!q.empty()) {
         int now = q.front();
         q.pop();
 
-        for (int neighbor : graph[now]) {
-            if (dist[neighbor] == INT_MAX) { 
-                dist[neighbor] = dist[now] + 1;
-                q.push(neighbor);
+        for (auto edge : graph[now]) {
+
+            if (!visited[edge]) {
+                visited[edge] = true;
+                dist[edge] = dist[now] + 1;
+                q.push(edge);
+
             }
         }
     }
@@ -63,4 +67,6 @@ int main() {
             cout << city << '\n';
         }
     }
+
+    return 0;
 }
