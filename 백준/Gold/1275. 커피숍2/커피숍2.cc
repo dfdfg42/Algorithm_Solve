@@ -6,21 +6,21 @@ using namespace std;
 
 vector<long long> tree;
 vector<long long> a;
-int N, Q, howmany;
+int N, Q;
 
-// Function to build the segment tree
+// 세그먼트 트리 구축
 void build() {
     for (int i = 0; i < N; ++i) {
-        tree[howmany + i] = a[i];
+        tree[N + i] = a[i];
     }
-    for (int i = howmany - 1; i > 0; --i) {
+    for (int i = N - 1; i > 0; --i) {
         tree[i] = tree[i << 1] + tree[i << 1 | 1];
     }
 }
 
-// Function to update a value in the segment tree
+// 세그먼트 트리의 특정 위치 값 업데이트
 void updateTree(int where, long long value) {
-    where += howmany;
+    where += N;
     tree[where] = value;
 
     while (where > 1) {
@@ -29,11 +29,11 @@ void updateTree(int where, long long value) {
     }
 }
 
-// Function to query the sum in the range [left, right]
+// 세그먼트 트리 구간 합 쿼리
 long long query(int left, int right) {
     long long sum = 0;
-    left += howmany;
-    right += howmany;
+    left += N;
+    right += N;
 
     while (left <= right) {
         if (left & 1) sum += tree[left++];
@@ -51,9 +51,7 @@ int main() {
 
     cin >> N >> Q;
     a.resize(N);
-    howmany = 1;
-    while (howmany < N) howmany <<= 1;
-    tree.resize(2 * howmany);
+    tree.resize(2 * N);
 
     for (int i = 0; i < N; ++i) {
         cin >> a[i];
