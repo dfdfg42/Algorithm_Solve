@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <cstring>
-#include <algorithm>
 
 using namespace std;
 
@@ -12,16 +11,18 @@ int findSeq;
 int seq;
 string ans;
 
-void dfs(int idx, string make) {
+
+void dfs(int idx,string make) {
     if (idx == totalLength) {
         seq += 1;
         if (seq == findSeq) {
             ans = make;
         }
+
         return;
     }
 
-    for (int i = 0; i < totalLength; i++) {  // Fix range to avoid out-of-bounds
+    for (int i = 0; i < totalLength; i++) {
         if (!visited[i]) {
             visited[i] = true;
             make += s[i];
@@ -30,6 +31,7 @@ void dfs(int idx, string make) {
             visited[i] = false;
         }
     }
+
 }
 
 int main() {
@@ -37,18 +39,31 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    while (cin >> s >> findSeq) {
+    while (1) {
+
+        cin >> s >> findSeq;
         totalLength = s.length();
 
         seq = 0;
         
         memset(visited, false, sizeof(visited));
+
+        if (cin.eof()) {
+            break;
+        }
+
+
         ans = "No permutation";
 
         dfs(0, "");
 
         cout << s << " " << findSeq << " = " << ans << '\n';
+
+ 
+
+
     }
 
+    
     return 0;
 }
