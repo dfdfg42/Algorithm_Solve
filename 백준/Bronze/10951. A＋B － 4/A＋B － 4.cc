@@ -1,24 +1,9 @@
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
-bool visited[10];
-
+#include <stdio.h>
 
 int main() {
-
-    while (1) {
-        int a, b;
-        cin >> a >> b;
-
-        if (cin.eof()) {
-            break;
-        }
-        
-        cout << a+b <<'\n';
+    int a, b;
+    while (scanf("%d %d", &a, &b) != -1) {
+        printf("%d\n", a + b);
     }
-
-    
     return 0;
 }
