@@ -1,43 +1,40 @@
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 #include <vector>
 #include <climits>
 using namespace std;
 
 int main() {
+    
     string s;
     cin >> s;
 
     int n = s.length();
-    int aCount = count(s.begin(), s.end(), 'a');
-
-    if (aCount == 0 || aCount == n) {
-        cout << 0 << '\n';
-        return 0;
+    int aCount = 0;
+    int bCount = 0;
+    int minBCount = INT_MAX;
+    for (char c : s) {
+        if (c == 'a') {
+            aCount++;
+        }
     }
-
+    
     s += s;
 
-    int minSwaps = INT_MAX;
-    int bCount = 0;
+    for (int i = 0; i < n; i++) {
+        int j =i + aCount-1;
 
-    for (int i = 0; i < aCount; ++i) {
-        if (s[i] == 'b') {
-            bCount++;
+        for (int k = i; k <= j; k++) {
+            if (s[k] == 'b') {
+                bCount++;
+            }
         }
-    }
-    minSwaps = bCount;
-
-    for (int i = 1; i < n; ++i) {
-        if (s[i - 1] == 'b') {
-            bCount--;
-        }
-        if (s[i + aCount - 1] == 'b') {
-            bCount++;
-        }
-        minSwaps = min(minSwaps, bCount);
+        minBCount = min(bCount, minBCount);
+        bCount = 0;
     }
 
-    cout << minSwaps << '\n';
-    return 0;
+    cout << minBCount << '\n';
+
+
 }
