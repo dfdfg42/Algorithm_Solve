@@ -13,66 +13,63 @@ int main() {
 
         for (int i = 0; i < n; i++) {
             string s; cin >> s;
-            for (int j = 0; j < n; j++) {    
-                 nng[i].push_back(s[j]);
+            for (int j = 0; j < n; j++) {
+                nng[i].push_back(s[j]);
             }
         }
 
-        // 각 행에 대해 숫자들을 저장하는 벡터
-        vector<vector<int>> row_nums(n);
-        // 각 열에 대해 숫자들을 저장하는 벡터
-        vector<vector<int>> col_nums(n);
+        vector<vector<int>> nums(2 * n);
 
-        // 열 탐색 (각 행에 대해서)
+        // 열 탐색 (각 행에 대해)
         for (int i = 0; i < n; i++) {
             int seq = 0;
             for (int j = 0; j < n; j++) {
                 if (nng[i][j] == 'X') seq++;
                 else {
                     if (seq != 0) {
-                        row_nums[i].push_back(seq);
+                        nums[i].push_back(seq);  // 행 탐색 결과 저장
                         seq = 0;
                     }
                 }
             }
             if (seq != 0) {
-                row_nums[i].push_back(seq);
+                nums[i].push_back(seq);
             }
         }
 
-        // 행 탐색 (각 열에 대해서)
+        // 행 탐색 (각 열에 대해)
         for (int i = 0; i < n; i++) {
             int seq = 0;
             for (int j = 0; j < n; j++) {
                 if (nng[j][i] == 'X') seq++;
                 else {
                     if (seq != 0) {
-                        col_nums[i].push_back(seq);
+                        nums[n + i].push_back(seq);  // 열 탐색 결과 저장
                         seq = 0;
                     }
                 }
             }
             if (seq != 0) {
-                col_nums[i].push_back(seq);
+                nums[n + i].push_back(seq);
             }
         }
 
-        // 결과 출력: 행부터 출력
+        // 출력: 행 결과 먼저
         for (int i = 0; i < n; i++) {
-            if (row_nums[i].empty()) cout << "0";
+            if (nums[i].empty()) cout << "0";
             else {
-                for (auto a : row_nums[i]) {
+                for (auto a : nums[i]) {
                     cout << a << ' ';
                 }
             }
             cout << '\n';
         }
 
-        // 결과 출력: 열 출력
+        // 출력: 열 결과 나중에
         for (int i = 0; i < n; i++) {
-            if (col_nums[i].empty()) cout << "0";
+            if (nums[n + i].empty()) cout << "0";
             else {
-                for (auto a : col_nums[i]) {
+                for (auto a : nums[n + i]) {
                     cout << a << ' ';
                 }
             }
