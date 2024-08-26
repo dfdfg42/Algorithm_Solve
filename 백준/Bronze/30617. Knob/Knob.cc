@@ -1,35 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int main(void)
-{
-    ios_base::sync_with_stdio(false); 
+int main() {
+    ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int prev_left = 0, prev_right = 0;
-    int curr_left, curr_right;
-    int T, fun_score = 0;
-
+    int T;
     cin >> T;
-    for (int t = 0; t < T; t++)
-    {
-        cin >> curr_left >> curr_right;
 
-        if (t > 0)
-        {
-            // 같은 방향으로 돌린 경우
-            if (prev_left == curr_left && curr_left != 0) fun_score++;
-            if (prev_right == curr_right && curr_right != 0) fun_score++;
+    int l_prev = 0, r_prev = 0;
+    int l, r;
+    int fun_score = 0;
+
+    for (int i = 0; i < T; i++) {
+
+        cin >> l >> r;
+
+        if (i > 0) {
+            // 재미도 계산
+            if (l != 0 && l == l_prev) {
+                fun_score++;
+            }
+            if (r != 0 && r == r_prev) {
+                fun_score++;
+            }
+
+        }
+        if (r != 0 && l == r) {
+            fun_score++;
         }
 
-        // 양쪽 노브가 같은 방향으로 돌린 경우
-        if (curr_left == curr_right && curr_left != 0) fun_score++;
-
-        // 현재 노브 상태를 이전 상태로 업데이트
-        prev_left = curr_left;
-        prev_right = curr_right;
+        // 현재 상태를 이전 상태로 업데이트
+        l_prev = l;
+        r_prev = r;
     }
 
-    cout << fun_score;
+    cout << fun_score << endl;
     return 0;
 }
