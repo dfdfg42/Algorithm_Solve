@@ -1,40 +1,40 @@
 #include <iostream>
-#include <queue>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int main() {
     int n, c;
     cin >> n >> c;
 
-    vector<int> t(c);
+    vector<int> times(c);
     for (int i = 0; i < c; i++) {
-        cin >> t[i];
+        cin >> times[i];
     }
 
-    // 최소 힙을 사용하여 계산대의 남은 시간을 관리
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    vector<int> cashier(n, 0);  // 각 계산대의 남은 시간
+    vector<int> ans(c);  // 각 고객이 배정된 계산대 번호를 저장
 
-    // 처음에 모든 계산대는 비어있으므로, 0초로 초기화
-    for (int i = 1; i <= n; i++) {
-        pq.push({0, i});
-    }
-
-    vector<int> result;
     for (int i = 0; i < c; i++) {
-        auto [available_time, cashier] = pq.top();
-        pq.pop();
+        // 가장 빨리 비는 계산대를 찾기
+        int min_time = cashier[0];
+        int min_index = 0;
 
-        // 고객을 이 계산대에 할당
-        result.push_back(cashier);
+        for (int j = 1; j < n; j++) {
+            if (cashier[j] < min_time) {
+                min_time = cashier[j];
+                min_index = j;
+            }
+        }
 
-        // 계산대의 남은 시간을 갱신
-        pq.push({available_time + t[i], cashier});
+        // 고객을 가장 빨리 비는 계산대에 배치
+        ans[i] = min_index + 1;
+        cashier[min_index] += times[i];  // 해당 계산대의 남은 시간 갱신
     }
 
     // 결과 출력
-    for (int cashier : result) {
-        cout << cashier << " ";
+    for (int a : ans) {
+        cout << a << " ";
     }
 
     return 0;
