@@ -1,52 +1,39 @@
 #include <iostream>
-#include <vector>
 #include <set>
-#include <algorithm>
 using namespace std;
 
-int gcd(int a, int b) {
-    if (b == 0)
-        return a;
-    return gcd(b, a % b);
-}
-
 int main() {
-    int n;
-    cin >> n;
+    int N;
+    cin >> N;
 
-    set<pair<int, int>> slopes;
-    int z = 0;
+    set<double> quad1, quad2, quad3, quad4;
+    set<string> axis;
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < N; i++) {
         int x, y;
         cin >> x >> y;
 
-        if (x == 0) {
-            // 수직선에 있는 경우
-            z |= (y > 0 ? 1 : 2); // y > 0이면 1, y < 0이면 2
-        } else if (y == 0) {
-            // 수평선에 있는 경우
-            z |= (x > 0 ? 4 : 8); // x > 0이면 4, x < 0이면 8
-        } else {
-            // 기울기 정규화 및 사분면 구분
-            int g = gcd(abs(x), abs(y));
-            x /= g;
-            y /= g;
-            if (x < 0) { // x를 양수로 정규화
-                x = -x;
-                y = -y;
-            }
-            slopes.insert({x, y});
+        if (x > 0 && y > 0) {
+            quad1.insert(static_cast<double>(y) / x);
+        } else if (x < 0 && y > 0) {
+            quad2.insert(static_cast<double>(y) / x);
+        } else if (x < 0 && y < 0) {
+            quad3.insert(static_cast<double>(y) / x);
+        } else if (x > 0 && y < 0) {
+            quad4.insert(static_cast<double>(y) / x);
+        } else if (x == 0 && y > 0) {
+            axis.insert("y");
+        } else if (x == 0 && y < 0) {
+            axis.insert("-y");
+        } else if (y == 0 && x > 0) {
+            axis.insert("x");
+        } else if (y == 0 && x < 0) {
+            axis.insert("-x");
         }
     }
 
-    int result = slopes.size();
-    if (z & 1) result++; // 양의 y축 방향
-    if (z & 2) result++; // 음의 y축 방향
-    if (z & 4) result++; // 양의 x축 방향
-    if (z & 8) result++; // 음의 x축 방향
-
-    cout << result << '\n';
+    int res = quad1.size() + quad2.size() + quad3.size() + quad4.size() + axis.size();
+    cout << res << '\n';
 
     return 0;
 }
