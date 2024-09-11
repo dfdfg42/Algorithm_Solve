@@ -36,8 +36,6 @@ bool remainMatch(vector<int>& remainOne, vector<int>& remainTwo, int dupi1, int 
                         }
 
                     }
-                    // cout<<i<<" "<<j<<'\n';
-                    // for(int I=0;I<5;I++) cout<<check[I]<<" "; cout<<'\n';
 
                     bool allCheck = true;
                     for (auto a : check) {
@@ -48,10 +46,7 @@ bool remainMatch(vector<int>& remainOne, vector<int>& remainTwo, int dupi1, int 
                     //전부 true 면 false 반환
 
                     if (allCheck) {
-                        /*for (int k = 0; k < 5; k++) {
-                            cout << i << '\n';
-                            cout << numbers[i][j][k] << ' ';
-                        }*/
+
                         return true;
                     }
 
@@ -110,17 +105,6 @@ int main() {
                                     remainTwo.push_back(numbers[j][p][b]);
                                 }
 
-                                // cout<<target<<'\n';
-
-                                // for(int I=0;I<5;I++){
-                                //     cout<<numbers[i][k][I]<<' ';
-                                // }
-                                // cout<<'\n';
-
-                                // for(int I=0;I<5;I++){
-                                //     cout<<numbers[j][p][I]<<' ';
-                                // }
-                                // cout<<'\n';
 
                                 if (!remainMatch(remainOne, remainTwo, i, k, j, p)) {
                                     cout << i + 1 << ' ' << j + 1 << '\n';
