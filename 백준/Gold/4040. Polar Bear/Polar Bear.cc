@@ -45,13 +45,6 @@ void simulate(int g) {
         polar = polarCopy;
 
 
-        //cout << "폴라 전부 확인: " << g << endl;
-        //for (int i = 0; i < m; i++) {
-        //    for (int j = 0; j < n; j++) {
-        //        cout << polar[i][j] << ' ';
-        //    }
-        //    cout << endl;
-        //}
 
     }
 
@@ -143,13 +136,7 @@ int main() {
         int g;
         cin >> g;
 
-        //cout << "폴라 전부 확인 \n";
-        //for (int i = 0; i < m; i++) {
-        //    for (int j = 0; j < n; j++) {
-        //        cout << polar[i][j] << ' ';
-        //    }
-        //    cout << endl;
-        //}
+
 
         //g 만큼 시뮬레이션 진행
         simulate(g);
