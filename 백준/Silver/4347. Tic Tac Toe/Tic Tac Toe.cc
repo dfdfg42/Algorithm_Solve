@@ -66,11 +66,7 @@ int main() {
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        // 각 테스트 케이스 사이의 빈 줄 처리
-        if (i > 0) {
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-
+    
         vector<vector<char>> board(3, vector<char>(3));
         for (int r = 0; r < 3; r++) {
             string input;
