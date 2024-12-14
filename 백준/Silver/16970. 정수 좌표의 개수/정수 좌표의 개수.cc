@@ -24,7 +24,7 @@ int main() {
                     int dx = x2 - x1;
                     int dy = y2 - y1;
 
-                    int g = std::gcd(abs(dx), abs(dy));
+                    int g = gcd(abs(dx), abs(dy));
                     // 선분 위 격자점 개수: g + 1
                     if (g + 1 == K) {
                         ans++;
