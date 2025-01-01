@@ -13,7 +13,7 @@ int main() {
         cin >> X;
 
 
-        long long r = (long long)floorl(sqrtl((long double)X));
+        long long r = (long long)floorl(sqrt((long double)X));
 
 
         if (r * r == X) {
