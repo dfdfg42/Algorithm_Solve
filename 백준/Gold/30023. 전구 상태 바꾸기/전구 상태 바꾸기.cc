@@ -21,11 +21,6 @@ bool solve(vector<char> s, int &ans) {
         }
     }
 
-    //cout << "convert: ";
-    //for (auto a : s) {
-    //    cout << a;
-    //}cout << endl;
-
     for (int i = 1; i < n; ++i) {
         if (s[i] != s[0]) return false;
     }
@@ -56,10 +51,6 @@ int main() {
             }
         }
 
-        //cout << "test" << initial <<':';
-        //for (auto a : temp_s) {
-        //    cout << a;
-        //}cout << endl;
 
         if (solve(temp_s, ops)) {
 
