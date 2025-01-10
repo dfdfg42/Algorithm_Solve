@@ -4,21 +4,7 @@
 using namespace std;
 
 int n;
-int check(int start, int gap, const vector<int>& vec, int initial_count) {
-    int count = initial_count;
 
-    for (int i = 0; i < n; i++) {
-        int expected = start + gap * i;
-        int actual = vec[i];
-        if (abs(expected - actual) > 1) {
-            return INT_MAX;
-        }
-        if (expected != actual) {
-            count++;
-        }
-    }
-    return count;
-}
 
 int main() {
     ios::sync_with_stdio(false);
