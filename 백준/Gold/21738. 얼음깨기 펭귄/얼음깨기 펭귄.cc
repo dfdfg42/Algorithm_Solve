@@ -1,57 +1,74 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <algorithm>
 using namespace std;
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, S, P;
-    cin >> N >> S >> P;
+    int n, s, p;
+    cin >> n >> s >> p;
 
-    // 그래프 구성 (트리)
-    vector<vector<int>> graph(N + 1);
-    for(int i = 1; i < N; i++) {
+    // 인접 리스트 준비
+    vector<vector<int>> graph(n + 1);
+    vector<bool> visited(n + 1, false);
+
+    // 간선 입력 (트리 구조)
+    for (int i = 1; i < n; i++) {
         int a, b;
         cin >> a >> b;
         graph[a].push_back(b);
         graph[b].push_back(a);
     }
 
-    // 1) BFS로 P에서 각 노드까지의 거리 구하기
-    vector<int> dist(N + 1, -1);
-    queue<int> q;
-    dist[P] = 0;
-    q.push(P);
+    // BFS 준비
+    queue<pair<int, int>> q;
+    q.push({ p, 0 });
+    visited[p] = true;
 
-    while(!q.empty()) {
-        int now = q.front();
+    bool find = false;
+    int ans = 0;
+
+    while (!q.empty()) {
+        // queue에서 (현재 노드, 거리) 꺼내기
+        int now = q.front().first;
+        int dist = q.front().second;
         q.pop();
-        for(int nxt : graph[now]) {
-            if(dist[nxt] == -1) { 
-                dist[nxt] = dist[now] + 1;
-                q.push(nxt);
+
+        // 현재 노드에 인접한 노드 탐색
+        for (auto next : graph[now]) {
+            // 아직 방문하지 않은 경우만
+            if (!visited[next]) {
+                visited[next] = true;
+
+                // 지지대 노드(번호 <= s) 발견 시 처리
+                if (next <= s) {
+                    // ans가 0이면 첫 번째 지지대,
+                    // 그 뒤면 두 번째 지지대라는 가정으로 ans 계산
+                    if (find == false) {
+                        ans -= (dist + 1);
+                        //cout << "ans :" << ans << '\n';
+                        find = true;
+                    }
+                    else {
+                        ans -= (dist + 1);
+                        //cout << "ans :" << ans << '\n';
+                        // 여기서 BFS 완전히 중단 (문제 아이디어상?)
+                        cout << n + ans - 1 << endl;
+                        return 0;
+                    }
+                }
+                else {
+                    // 일반 노드는 계속 큐에 넣어서 탐색
+                    q.push({ next, dist + 1 });
+                }
             }
         }
     }
 
-    // 2) 지지대(1~S)들의 거리만 모아서 정렬
-    vector<int> supportDist;
-    supportDist.reserve(S);
-    for(int i = 1; i <= S; i++) {
-        supportDist.push_back(dist[i]);
-    }
-    sort(supportDist.begin(), supportDist.end());
 
-    // 3) 가장 가까운 2개 거리: d1, d2
-    int d1 = supportDist[0]; 
-    int d2 = supportDist[1];
 
-    // 4) 결과 = N - ((d1 + 1) + (d2 + 1) - 1) = N - (d1 + d2 + 1)
-    int answer = N - (d1 + d2 + 1);
 
-    cout << answer << "\n";
     return 0;
 }
