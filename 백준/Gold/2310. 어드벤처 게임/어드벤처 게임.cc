@@ -1,91 +1,90 @@
-#include <cstdio>
+#include <iostream>
 #include <vector>
-
+#include <queue>
+#include <cstring>
 using namespace std;
 
-int n;
-vector<vector<int>> way;
+vector<vector<int>> nodes;
 int cost[1001];
 int visited[1001];
 int sw;
+int n;
 
-void dfs(int now, int money){
-    if(sw == 1)
+void dfs(int now, int money) {
+    if (sw == 1)
         return;
-    
+
     // n번째 방 도착
-    if(now == n) {
+    if (now == n) {
         sw = 1;
         return;
     }
-    
-    for(int i=0; i<way[now].size(); i++) {
-        int next = way[now][i];
-        
-        if(visited[next] == 1)
+
+    for (size_t i = 0; i < nodes[now].size(); i++) {
+        int next = nodes[now][i];
+
+        if (visited[next] == 1)
             continue;
-        
+
         // L
-        if(cost[next] > 0 ) {
-            if(cost[next] > money)
+        if (cost[next] > 0) {
+            if (cost[next] > money)
                 money = cost[next];
         }
         // T or E
         else
             money += cost[next];
-        
+
         //돈 부족해서 못감
-        if(money < 0)
+        if (money < 0)
             return;
-        
+
         visited[next] = 1;
         dfs(next, money);
         visited[next] = 0;
     }
 }
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-int main () {
-    
-    while(1){
-        scanf("%d", &n);
-        if(n == 0)
-            break;
-       
-        way.resize(n+1);
+
+    while (true) {
+        cin >> n;
+        if (n == 0) break;
+
+        nodes.resize(n + 1);
         sw = 0;
-        for(int i=1; i<=n; i++){
-            char info;
+        for (int i = 1; i <= n; i++) {
+            char type;
             int c;
-            getchar();
-            scanf("%c %d", &info, &c);
-            while(1) {
+
+            cin >> type >> c;
+            while (true) {
                 int next;
-                scanf("%d", &next);
-                if(next == 0)
-                    break;
-                way[i].push_back(next);
+                cin >> next;
+                if (next == 0) break;
+
+                nodes[i].push_back(next);
             }
-            if(info == 'T')
-                cost[i] = -c;
-            else
-                cost[i] = c;
+
+            if (type == 'T') cost[i] = -c;
+            else cost[i] = c;
         }
-        
-        if(cost[1] >= 0) {
+
+        if (cost[1] >= 0) {
             visited[1] = 1;
             dfs(1, cost[1]);
         }
         
-        if(sw == 1)
-            printf("Yes\n");
-        else
-            printf("No\n");
-        
-        way.clear();
-        for(int i=0; i<=n; i++){
-            cost[i] = 0;
-            visited[i] = 0;
-        }
-        
+        if (sw == 1) cout << "Yes\n";
+        else cout << "No\n";
+
+        nodes.clear();
+
+        memset(cost, 0, sizeof(cost));
+        memset(visited, 0, sizeof(visited));
     }
+
+    return 0;
 }
