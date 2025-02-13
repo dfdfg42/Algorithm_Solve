@@ -1,0 +1,12 @@
+-- 코드를 입력하세요
+SELECT ai.name  as 'NAME', count(*) as 'COUNT'
+
+from animal_ins as ai
+
+where ai.name is not null 
+
+group by ai.name
+
+having count(*) >= 2
+
+order by ai.name asc
