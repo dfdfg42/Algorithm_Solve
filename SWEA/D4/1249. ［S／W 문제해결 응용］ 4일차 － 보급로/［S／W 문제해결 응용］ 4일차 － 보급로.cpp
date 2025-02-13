@@ -6,8 +6,8 @@
 
 using namespace std;
 
-int dx[4] = {1,-1,0,0,};
-int dy[4] = {0,0,1,-1};
+int dx[4] = { 1,-1,0,0, };
+int dy[4] = { 0,0,1,-1 };
 
 vector<vector<int>> mapVec;
 vector<vector<int>> visited;
@@ -22,12 +22,11 @@ int main() {
         int n;
         cin >> n;
 
-
         //맵 할당
         mapVec.clear();
         visited.clear();
-        mapVec.resize(n, vector<int>(n,0));
-        visited.resize(n, vector<int>(n,0));
+        mapVec.resize(n, vector<int>(n, 0));
+        visited.resize(n, vector<int>(n, 0));
 
         for (int i = 0; i < n; i++) {
             string s;
@@ -54,23 +53,18 @@ int main() {
             pq.pop();
 
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
                 int ny = y + dy[i];
+                int nx = x + dx[i];
 
-                if (0 <= nx && nx < n && 0 <= ny && ny < n  && visited[nx][ny] == 0 ) {
-
+                if (0 <= ny && ny < n && 0 <= nx && nx < n && visited[nx][ny] == 0) {
                     visited[nx][ny] = 1;
                     pq.push({ cost + mapVec[nx][ny] ,{nx,ny} });
-
                 }
             }
-
-
         }
 
         cout << '#' << k << ' ' << totalCost << '\n';
-
     }
-   
+
     return 0;
 }
