@@ -1,0 +1,45 @@
+WITH
+  -- 1) 대여 가능 차 목록(세단/SUV 한정)
+  AVAILABLE_CARS AS (
+      SELECT 
+          C.CAR_ID,
+          C.CAR_TYPE,
+          C.DAILY_FEE
+      FROM CAR_RENTAL_COMPANY_CAR AS C
+      WHERE C.CAR_TYPE IN ('세단','SUV')
+        AND C.CAR_ID NOT IN (
+            SELECT R.CAR_ID
+            FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY AS R
+            WHERE R.START_DATE <= '2022-11-30'
+              AND R.END_DATE >= '2022-11-01'
+        )
+  ),
+  -- 2) '30일 이상' 할인율 테이블(세단/SUV만)
+  DISCOUNT_PLAN_30 AS (
+      SELECT 
+          CAR_TYPE,
+          DISCOUNT_RATE
+      FROM CAR_RENTAL_COMPANY_DISCOUNT_PLAN
+      WHERE DURATION_TYPE = '30일 이상'
+        AND CAR_TYPE IN ('세단','SUV')
+  )
+
+SELECT
+    A.CAR_ID,
+    A.CAR_TYPE,
+    -- 정수 변환: CAST(... AS SIGNED)
+    CAST(
+      A.DAILY_FEE * (1 - DP.DISCOUNT_RATE/100.0) * 30 
+      AS SIGNED
+    ) AS FEE
+FROM AVAILABLE_CARS A
+JOIN DISCOUNT_PLAN_30 DP 
+  ON A.CAR_TYPE = DP.CAR_TYPE
+WHERE 
+    (A.DAILY_FEE * (1 - DP.DISCOUNT_RATE/100.0) * 30) >= 500000
+    AND 
+    (A.DAILY_FEE * (1 - DP.DISCOUNT_RATE/100.0) * 30) < 2000000
+ORDER BY
+    FEE DESC,
+    A.CAR_TYPE ASC,
+    A.CAR_ID DESC;
