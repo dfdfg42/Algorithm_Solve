@@ -1,0 +1,10 @@
+SELECT 
+    p.PRODUCT_CODE,
+    SUM(p.PRICE * os.SALES_AMOUNT) AS SALES
+FROM PRODUCT AS p
+JOIN OFFLINE_SALE AS os 
+    ON p.PRODUCT_ID = os.PRODUCT_ID
+GROUP BY p.PRODUCT_CODE
+ORDER BY 
+    SALES DESC,       -- 매출액을 기준으로 내림차순
+    p.PRODUCT_CODE ASC;  -- 매출액이 동일하면 상품코드를 오름차순
