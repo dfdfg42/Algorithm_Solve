@@ -42,9 +42,7 @@ int main() {
             }
         }
 
-        for (int j = c0; j <= n; j++) {
-            dp[j] = max(dp[j], dp[j - c0] + d0);
-        }
+
     }
 
     cout << dp[n] << '\n';
