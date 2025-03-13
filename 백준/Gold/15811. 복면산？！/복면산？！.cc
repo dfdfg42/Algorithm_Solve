@@ -1,60 +1,53 @@
 #include <iostream>
-#include <unordered_map>
 #include <string>
 #include <vector>
-#include <map>
-#include <cmath>
-
 using namespace std;
 
-unordered_map<char, int> mapping;
-vector<pair<char, int>> alphas;
-vector<string> token;
-unordered_map<char, long long> coef; // 각 문자에 대한 계수(precomputed coefficient)
-bool possible;
-bool used[10] = { false };
-
-void precomputeCoef() {
-    // token[0]와 token[1]는 양의 가중치, token[2]는 음의 가중치
-    // 자리수는 가장 왼쪽이 최고 자리이므로, weight = 10^(len - i - 1)
-    for (int t = 0; t < 3; t++) {
-        int len = token[t].size();
-        int sign = (t < 2) ? 1 : -1; // token0, token1: +1, token2: -1
-        for (int i = 0; i < len; i++) {
-            char ch = token[t][i];
-            long long weight = 1;
-            for (int j = 0; j < len - i - 1; j++) {
-                weight *= 10;
-            }
-            coef[ch] += sign * weight;
-        }
-    }
-}
+int mappingArr[26];       // 'A'~'Z'에 해당하는 숫자 매핑, 미할당은 -1로 초기화
+bool used[10] = { false }; // 0~9 숫자 사용 여부
+vector<int> letters;      // 입력된 문자열에 등장하는 문자(인덱스: 'A'-'Z')만 저장
+vector<string> token;     // 세 단어 저장
+bool possible = false;
 
 void check() {
-    long long total = 0;
-    // 모든 등장 문자에 대해 mapping값과 미리 구한 계수를 곱해 더함
-    for (auto &p : mapping) {
-        total += (long long)p.second * coef[p.first];
+    int a = 0, b = 0, c = 0;
+    int cnt = 1;
+    // token[0] 처리
+    for (int i = token[0].size() - 1; i >= 0; i--) {
+        int idx = token[0][i] - 'A';
+        a += cnt * mappingArr[idx];
+        cnt *= 10;
     }
-    if (total == 0)
+    cnt = 1;
+    // token[1] 처리
+    for (int i = token[1].size() - 1; i >= 0; i--) {
+        int idx = token[1][i] - 'A';
+        b += cnt * mappingArr[idx];
+        cnt *= 10;
+    }
+    cnt = 1;
+    // token[2] 처리
+    for (int i = token[2].size() - 1; i >= 0; i--) {
+        int idx = token[2][i] - 'A';
+        c += cnt * mappingArr[idx];
+        cnt *= 10;
+    }
+    if (a + b == c)
         possible = true;
 }
 
 void dfs(int idx) {
     if (possible) return;
-    if (idx == alphas.size()) {
+    if (idx == letters.size()) {
         check();
         return;
     }
-    
-    for (int i = 0; i <= 9; i++) {
-        if (used[i]) continue;
-        used[i] = true;
-        alphas[idx].second = i;
-        mapping[alphas[idx].first] = i;
+    for (int d = 0; d <= 9; d++) {
+        if (used[d]) continue;
+        used[d] = true;
+        mappingArr[letters[idx]] = d;
         dfs(idx + 1);
-        used[i] = false;
+        used[d] = false;
     }
 }
 
@@ -67,20 +60,23 @@ int main() {
     token.push_back(word1);
     token.push_back(word2);
     token.push_back(word3);
-    
-    // 등장하는 문자들만 mapping 및 alphas에 저장
+
+    // mappingArr를 -1로 초기화
+    for (int i = 0; i < 26; i++) {
+        mappingArr[i] = -1;
+    }
+    // 등장한 문자만 기록 (letters에는 'A'-'Z'에 대한 인덱스 저장)
+    bool exist[26] = { false };
     for (auto &word : token) {
         for (char ch : word) {
-            if (mapping.find(ch) == mapping.end()) {
-                mapping[ch] = -1;
-                alphas.push_back({ ch, -1 });
+            int idx = ch - 'A';
+            if (!exist[idx]) {
+                exist[idx] = true;
+                letters.push_back(idx);
             }
         }
     }
     
-    precomputeCoef(); // 각 문자별 계수 전처리
-
-    possible = false;
     dfs(0);
     
     cout << (possible ? "YES" : "NO") << "\n";
