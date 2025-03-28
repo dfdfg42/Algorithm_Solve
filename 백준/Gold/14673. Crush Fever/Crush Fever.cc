@@ -29,34 +29,30 @@ void gravity(vector<vector<int>>& tBoard) {
     }
 }
 
-// depth: 현재까지 제거한 횟수
-// Score: 현재까지 획득한 점수
-// tBoard: 현재 보드 상태
 void dfs(int depth, int Score, vector<vector<int>>& tBoard) {
-    // 중력 처리 (매 단계마다)
+
     gravity(tBoard);
 
-    // 만약 3번 제거했다면 최고 점수 갱신 후 종료
     if (depth == 3) {
         bestScore = max(bestScore, Score);
         return;
     }
 
-    // 이미 방문한 칸은 다시 BFS하지 않도록 visited 사용
+
     vector<vector<bool>> visited(n, vector<bool>(m, false));
-    bool foundMove = false;  // 이번 단계에서 제거할 수 있는 연결요소가 있는지
+    bool foundMove = false;  
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            // 0이 아니고 아직 방문 안 했다면
+            
             if (tBoard[i][j] != 0 && !visited[i][j]) {
 
                 foundMove = true;
                 int chosen = tBoard[i][j];
 
-                // BFS로 연결된 칸들 전부 찾기
+                
                 queue<pair<int, int>> q;
-                vector<pair<int, int>> connected; // 연결된 좌표 저장
+                vector<pair<int, int>> connected; 
                 q.push({ i, j });
                 visited[i][j] = true;
                 connected.push_back({ i, j });
@@ -76,18 +72,16 @@ void dfs(int depth, int Score, vector<vector<int>>& tBoard) {
                     }
                 }
 
-                // 이제 이 연결요소를 제거(0으로 만들)하는 경우를 시뮬레이션
-                // 임시 보드 복사
+
                 vector<vector<int>> tempBoard = tBoard;
                 for (auto& cell : connected) {
                     tempBoard[cell.first][cell.second] = 0;
                 }
 
                 int count = (int)connected.size();
-                // 점수 = count^2
+
                 int gained = count * count;
 
-                // 재귀 호출
                 dfs(depth + 1, Score + gained, tempBoard);
             }
         }
