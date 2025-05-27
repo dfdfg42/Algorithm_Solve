@@ -60,25 +60,7 @@ int main() {
             if (left > right) continue;
             
      
-            int y1 = min(logs[i].y, logs[j].y);
-            int y2 = max(logs[i].y, logs[j].y);
-            
-            // 방해하는 통나무가 있는지 확인
-            bool blocked = false;
-            for (int k = 0; k < n; k++) {
-                if (k == i || k == j) continue;
-                
-
-                if (max(logs[k].x1, left) <= min(logs[k].x2, right) && 
-                    logs[k].y > y1 && logs[k].y < y2) {
-                    blocked = true;
-                    break;
-                }
-            }
-            
-            if (!blocked) {
-                Union(logs[i].idx, logs[j].idx);
-            }
+            Union(logs[i].idx, logs[j].idx);
         }
     }
     
