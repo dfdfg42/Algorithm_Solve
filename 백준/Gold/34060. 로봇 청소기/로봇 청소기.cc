@@ -2,53 +2,41 @@
 using namespace std;
 using ll = long long;
 
-struct PairHash {
-    size_t operator()(const pair<ll,ll>& p) const noexcept {
-        return std::hash<ll>()(p.first ^ (p.second + 0x9e3779b97f4a7c15ULL
-                                          + (p.first<<6) + (p.first>>2)));
-    }
-};
-
-int dy[4] = {-1,0,1,0};
-int dx[4] = {0,1,0,-1};
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {-1, 0, 1, 0};
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N;
-    cin >> N;
+    int N;  cin >> N;
     vector<ll> y(N);
     for (auto& v : y) cin >> v;
 
-    vector<pair<ll,ll>> pos(N);
-    unordered_map<pair<ll,ll>, int, PairHash> mp;
-    mp.reserve(N * 2);
-
+    set<pair<ll,ll>> S;      // 모든 오염 칸 (x,y)
     ll curX = 0;
     for (int i = 0; i < N; ++i) {
-        if (i && y[i] <= y[i - 1]) ++curX;
-        pos[i] = {curX, y[i]};
-        mp[pos[i]] = i;
+        if (i && y[i] <= y[i-1]) ++curX;   // 이전보다 작거나 같으면 새 열
+        S.emplace(curX, y[i]);
     }
 
-    vector<char> vis(N, 0);
     int minCnt = 0;
-    queue<int> q;
+    queue<pair<ll,ll>> q;
 
-    for (int i = 0; i < N; ++i) if (!vis[i]) {
+    while (!S.empty()) {
         ++minCnt;
-        vis[i] = 1;
-        q.push(i);
+        auto start = *S.begin();   // 아직 처리 안 한 칸 하나 잡기
+        S.erase(S.begin());
+        q.push(start);
+
         while (!q.empty()) {
-            int idx = q.front(); q.pop();
-            auto [x, yy] = pos[idx];
+            auto [x, yy] = q.front(); q.pop();
             for (int d = 0; d < 4; ++d) {
-                auto nxt = make_pair(x + dx[d], yy + dy[d]);
-                auto it = mp.find(nxt);
-                if (it != mp.end() && !vis[it->second]) {
-                    vis[it->second] = 1;
-                    q.push(it->second);
+                pair<ll,ll> nxt = {x + dx[d], yy + dy[d]};
+                auto it = S.find(nxt);
+                if (it != S.end()) {
+                    q.push(nxt);
+                    S.erase(it);   // 방문 표시 겸 set에서 제거
                 }
             }
         }
