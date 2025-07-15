@@ -1,13 +1,11 @@
 #include <vector>
 #include <queue>
 #include <climits>
-#include <array>  
 using namespace std;
-
 
 int n;                                           
 vector<vector<int>> g_board;                       
-vector<vector<array<int,2>>> dist;                  
+vector<vector<vector<int>>> dist;                  
 
 int dy[4] = {-1, 1, 0, 0};
 int dx[4] = { 0, 0,-1, 1};
@@ -21,26 +19,26 @@ bool isFree(int y, int x) {
 }
 
 int solution(vector<vector<int>> board) {
+
     n = board.size();
     g_board = board;
-    dist.assign(n, vector<array<int,2>>(n, {INT_MAX, INT_MAX}));
+    dist.assign(n,vector<vector<int>>(n,vector<int>(2, INT_MAX)));
     
     queue<Drone> q;
     dist[0][0][0] = 0;
     q.push({0, 0, 0});
-    
+
     while (!q.empty()) {
-        auto cur = q.front(); 
-        q.pop();
-        
+        auto cur = q.front(); q.pop();
         int y = cur.y, x = cur.x, dir = cur.dir;
         int d = dist[y][x][dir];
-        int y1 = y,       x1 = x;
-        int y2 = y + dir, x2 = x + (dir==0);
         
+        int y1 = y,
+            x1 = x;
+        int y2 = y + dir, x2 = x + (dir==0);
+
         if ((y1==n-1 && x1==n-1) || (y2==n-1 && x2==n-1))
             return d;
-        
         for (int i = 0; i < 4; i++) {
             int ny1 = y1 + dy[i], nx1 = x1 + dx[i];
             int ny2 = y2 + dy[i], nx2 = x2 + dx[i];
@@ -76,7 +74,6 @@ int solution(vector<vector<int>> board) {
             }
         }
         else {
-
             if (x-1 >= 0 && isFree(y1,x-1) && isFree(y2,x-1)) {
                 if (dist[y1][x-1][0] > d+1) {
                     dist[y1][x-1][0] = d+1;
@@ -92,7 +89,6 @@ int solution(vector<vector<int>> board) {
                     dist[y1][x][0] = d+1;
                     q.push({y1, x, 0});
                 }
-
                 if (dist[y2][x][0] > d+1) {
                     dist[y2][x][0] = d+1;
                     q.push({y2, x, 0});
