@@ -15,38 +15,42 @@ using namespace std;
 typedef long long ll;
 
 int n, m;
-vector<pair<int,int>> subjs; // 값,순서
+vector<pair<int, int>> subjs; // 값,순서
 deque<pair<ll, int>> ans;
 
 void solve() {
-   cin >> n >> m;
-   subjs.reserve(m + 1);
-   for (int i = 1; i <= m; i++) {
-       int input;
-       cin >> input;
-       subjs.push_back({ input,i });
-   }
+    cin >> n >> m;
+    subjs.reserve(m + 1);
+    for (int i = 1; i <= m; i++) {
+        int input;
+        cin >> input;
+        subjs.push_back({ input,i });
+    }
 
-   sort(subjs.begin(), subjs.end()); 
+    sort(subjs.begin(), subjs.end());
 
-   ll sum = 0;
-   for (int i = 0; i < m; ++i) {
-       ans.push_back({ subjs[i].first, subjs[i].second });
-       sum += subjs[i].first;
+    ll sum = 0;
+    for (int i = 0; i < m; ++i) {
 
-       while (!ans.empty() && sum > 2LL * n) {
-           sum -= ans.front().first;
-           ans.pop_front();
-       }
+        if (sum < n) {
+            ans.push_back({ subjs[i].first, subjs[i].second });
+            sum += subjs[i].first;
+        }
+        while (!ans.empty() && sum > 2 * n) {
+            sum -= ans.front().first;
+            ans.pop_front();
 
-       if (sum >= n && sum <= 2LL * n)
-           break;
-   }
+        }
 
-   cout << ans.size() << '\n';
-   for (auto a : ans) {
-       cout << a.second << '\n';
-   }
+        if (sum >= n && sum <= 2 * n) {
+            break;
+        }
+    }
+
+    cout << ans.size() << '\n';
+    for (auto a : ans) {
+        cout << a.second << '\n';
+    }
 }
 
 int main() {
@@ -55,7 +59,7 @@ int main() {
 
     solve();
 
-    
+
 
     return 0;
 }
