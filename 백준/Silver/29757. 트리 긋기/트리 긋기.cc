@@ -23,7 +23,7 @@ void solve() {
     for (int i = 0; i < n; i++) {
         int x, y;
         cin >> x >> y;
-        points.push_back({{y,x},i + 1 });
+        points.push_back({{x,y},i + 1 });
     }
 
     sort(points.begin(), points.end());
