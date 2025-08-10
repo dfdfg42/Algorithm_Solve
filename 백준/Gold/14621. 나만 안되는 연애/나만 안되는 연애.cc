@@ -42,7 +42,7 @@ void solve() {
 
     int mstCost = 0;
     int used = 0;
-    while (!pq.empty() && used < n - 1) {
+    while (!pq.empty()) {
         int d = pq.top().first;
         int u = pq.top().second.first;
         int v = pq.top().second.second;
