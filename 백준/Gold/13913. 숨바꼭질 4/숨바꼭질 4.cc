@@ -8,6 +8,17 @@
 using namespace std;
 
 int visited[100'002];
+queue<int> q;
+
+void progress(int next,int now) {
+    if (next >= 0 && next <= 100'001) {
+        if (visited[next] == -1) {
+            q.push(next);
+            visited[next] = now;
+        }
+    }
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -21,7 +32,7 @@ int main() {
         return 0;
     }
 
-    queue<int> q;
+
     memset(visited, -1, sizeof(visited));
     q.push(n);
 
@@ -50,28 +61,13 @@ int main() {
 
 
         int next = now + 1;
-        if (next >= 0 && next <= 100'001) {
-            if (visited[next] == -1) {
-                q.push(next);
-                visited[next] = now;
-            }
-        }
+        progress(next, now);
 
         next = now * 2;
-        if (next >= 0 && next <= 100'001) {
-            if (visited[next] == -1) {
-                q.push(next);
-                visited[next] = now;
-            }
-        }
+        progress(next, now);
 
         next = now - 1;
-        if (next >= 0 && next <= 100'001) {
-            if (visited[next] == -1) {
-                q.push(next);
-                visited[next] = now;
-            }
-        }
+        progress(next, now);
 
     }
     
