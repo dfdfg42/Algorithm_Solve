@@ -40,7 +40,7 @@ int main() {
         int lx, ly, lz, px, py;
         cin >> lx >> ly >> lz >> px >> py;
 
-        box tempBox = { px,py,px + lx,ly,px,py + ly,px + lx,py + ly,0,0 };
+        box tempBox = { px,py,px + lx,py,px,py + ly,px + lx,py + ly,0,0 };
         int tempZ = 0;
         for (auto& b : boxes) {
             if (!(px + lx <= b.x0 || b.x1 <= px ||
