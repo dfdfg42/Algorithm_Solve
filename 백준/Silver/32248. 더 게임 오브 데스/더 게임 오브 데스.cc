@@ -49,9 +49,6 @@ int main() {
         if (visited[now] && !cycled) {
             int cycleCount = dfs(a[now], now, 1);
 
-            if (cycleCount == 0) {
-                cycleCount = 1;
-            }
             t %= cycleCount;
             cycled = true;
         }
