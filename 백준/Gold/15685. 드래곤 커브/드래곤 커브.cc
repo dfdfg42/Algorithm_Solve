@@ -31,8 +31,6 @@ void checkRect(int size) {
             if (board[i][j] == 1 && board[i + size][j] == 1
                 && board[i][j + size] == 1 && board[i + size][j + size] == 1) {
                 ans++;
-                //cout << i << ' ' << j << '\n';
-                //cout << " size: " << size << '\n';
             }
         }
     }
@@ -52,30 +50,19 @@ int main() {
         curves.push_back(d);
         dragon(curves, g);
 
-        //for (auto c : curves) {
-        //    cout << c << '\n';
-        //}
-        //cout << "================" << '\n';
 
         board[y][x] = 1;
         int ny = y, nx = x;
-        //cout << y << ' ' << x << '\n';
         for (auto c : curves) {
             ny += dy[c];
             nx += dx[c];
             board[ny][nx] = 1;
-            //cout << ny << ' ' << nx << '\n';
+
         }
 
 
     }
-    //for (int i = 0; i <= 100; i++) {
-    //    for (int j = 0; j <= 100; j++) {
-    //        cout << board[i][j];
-    //    }
-    //    cout << '\n';
-    //}
-    //cout << "======\n";
+
     ans = 0;
     checkRect(1);
     cout << ans << '\n';
