@@ -18,7 +18,7 @@ long long solution(int n, vector<int> times) {
     
     
     ll l = 0;
-    ll r =  (long long)times.back() * n;
+    ll r = LLONG_MAX;
     while(l<=r){
         //mid = 흐른 시간
         ll mid = (l+r)/2;
