@@ -99,12 +99,7 @@ int main() {
     cin.tie(nullptr);
 
     dice.resize(4, vector<int>(3,0));
- /*   dice[0][1] = 2;
-    dice[1][0] = 4;
-    dice[1][1] = 1;
-    dice[1][2] = 3;
-    dice[2][1] = 5;
-    dice[3][1] = 6;*/
+
 
 
     cin >> n >> m >> y >> x >> k;
@@ -116,19 +111,7 @@ int main() {
         }
     }
 
-    //moveRight(0, 0);
-    //showDice();
-    //tmp();
-    //moveDown(0, 0);
-    //showDice();
-    //tmp();
 
-    //moveUp(0, 0);
-    //showDice();
-    //tmp();
-    //moveLeft(0, 0);
-    //showDice();
-    //tmp();
 
     
 
@@ -136,10 +119,8 @@ int main() {
         int dir;
         cin >> dir;
 
-        //cout << "dir " << dir << '\n';
         int ny = y + dy[dir - 1];
         int nx = x + dx[dir - 1];
-       // cout << "ny " << ny << " nx " << nx << '\n';
         if (ny < 0 || ny >= n ||  nx < 0 || nx >= m) continue;
         y = ny;
         x = nx;
