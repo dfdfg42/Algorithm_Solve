@@ -1,56 +1,41 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // max 함수를 사용하기 위해 필요합니다.
 
 using namespace std;
 
 typedef long long ll;
-
-const ll INF = 4e18; 
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int n;
-    ll k; 
+    int ans = -987654321;
+
+    int n, k;
     cin >> n >> k;
 
-    vector<ll> v(n);
+    vector<int> v(n);
     for (int i = 0; i < n; i++) {
         cin >> v[i];
     }
 
-    vector<ll> left(n, 0);
-
+    vector<int> left(n,0);
+    //좌측 누적합
     left[0] = v[0] + 1 * k;
     for (int i = 1; i < n; i++) {
-        left[i] = max(left[i - 1], v[i] + (ll)(i + 1) * k);
+        left[i] = max(left[i - 1], v[i] + (i + 1) * k);
+        ans = max(ans, left[i - 1] - v[i] - (i + 1) * k);
     }
-
-
-    vector<ll> right(n, 0);
-
-    right[n - 1] = v[n - 1] - (ll)n * k;
+    //우측
+    vector<int> right(n, 0);
+    right[n - 1] = v[n - 1] - n* k;
     for (int i = n - 2; i >= 0; i--) {
-        right[i] = max(right[i + 1], v[i] - (ll)(i + 1) * k);
+        right[i] = max(right[i + 1], v[i] - (i + 1) * k);
+        ans = max(ans, right[i + 1] - v[i] + (i + 1) * k);
     }
 
-    ll ans = -INF;
-
-
-    for (int i = 1; i < n; i++) {
-
-        ans = max(ans, left[i - 1] - (v[i] + (ll)(i + 1) * k));
-    }
-
-
-    for (int i = 0; i < n - 1; i++) {
-
-        ans = max(ans, right[i + 1] - (v[i] - (ll)(i + 1) * k));
-    }
-
+    
     cout << ans << '\n';
 
     return 0;
