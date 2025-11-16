@@ -11,7 +11,6 @@ typedef long long ll;
 
 
 int n;
-set<ll> ansSet;
 
 int main()
 {
@@ -29,10 +28,7 @@ int main()
         pair<ll,int> now = q.front();
         //cout << now.first << '\n';
         if (now.second == n) {
-            if (ansSet.find(now.first) == ansSet.end()) {
-                ans.push_back(now.first);
-                ansSet.insert(now.first);
-            }
+            ans.push_back(now.first);
             q.pop();
             continue;
         }
