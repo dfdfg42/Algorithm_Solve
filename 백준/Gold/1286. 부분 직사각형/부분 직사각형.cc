@@ -41,12 +41,6 @@ int main()
 		
 	}
 
-	//for (int i = 0; i < 2 * n; i++) {
-	//	for (int j = 0; j < 2 * k; j++) {
-	//		cout << board[i][j];
-	//	}
-	//	cout << '\n';
-	//}
 
 
 	for (int i = 0; i < 2 * n; i++) {
@@ -57,27 +51,22 @@ int main()
 			//위쪽
 			if (i != 0) {
 				plus *= i + 1;
-				//cout << "1 : " << i + 1 << '\n';
 			}
 			//아래쪽
 			if (i != 2 * n - 1) {
 				plus *= (2 * n - i);
-				//cout << "2 : " << (2 * n - i) << '\n';
 			}
 			//왼쪽
 			if (j != 0)  {
 				plus *= j + 1;
-				//cout << "3 :" << j + 1 << '\n';
 			}
 			//오른쪽
 			if (j != 2 * k - 1) {
-				//cout << "4 : " << (2 * k - j) << '\n';
 				plus *= (2 * k - j);
 			}
 			charCnt[board[i][j] - 'A'] += plus;
 			
-			//cout << "check " << i << ' ' << j << '\n';;
-			//cout << plus <<'\n';
+
 		}
 	}
 	
