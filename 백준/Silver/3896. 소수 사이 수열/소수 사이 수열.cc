@@ -14,10 +14,6 @@ void solve() {
 	int k;
 	cin >> k;
 
-	if (binary_search(primes.begin(), primes.end(), k)) {
-		cout << 0 << '\n';
-		return;
-	}
 
 	int l = 0, r = primes.size() - 1;
 	int ansIdx = 0; 
@@ -31,6 +27,11 @@ void solve() {
 			ansIdx = mid;   
 			l = mid + 1;
 		}
+	}
+
+	if (primes[ansIdx] == k) {
+		cout << 0 << '\n';
+		return;
 	}
 
 	cout << primes[ansIdx + 1] - primes[ansIdx] << '\n';
