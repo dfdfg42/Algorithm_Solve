@@ -90,10 +90,10 @@ void dfs(int depth, int index, vector<int>& archers) {
         return;
     }
 
-    for (int i = index+1; i < M; i++) {
+    for (int i = index; i < M; i++) {
 
         archers.push_back(i);
-        dfs(depth+1,i , archers);
+        dfs(depth+1,i+1 , archers);
         archers.pop_back();
 
     }
@@ -122,7 +122,7 @@ int main() {
     
     // 궁수의 위치 3개 반환
     vector<int> temp;
-    dfs(0,-1,temp);
+    dfs(0,0,temp);
 
     cout << maxEliminated << '\n';
 
