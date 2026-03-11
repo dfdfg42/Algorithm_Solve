@@ -35,7 +35,8 @@ public class Main {
 		
 		int seq =1;
 		int ans[] = new int[N+1];
-
+		boolean[] visited = new boolean[N+1];
+		
 		for(int i=0; i<M; i++) {
 			
 			st = new StringTokenizer(br.readLine());
@@ -57,29 +58,35 @@ public class Main {
 				
 				q.add(i);
 				ans[i] = 1;
+				visited[i] = true;
 			}
 			
 		}
 		
-
+		seq = 0;
 		
 		while(!q.isEmpty()) {
 			
-			int now = q.poll();
+			int s = q.size();
+			seq++;
 
-			boolean find = false;
-			for(int a : graph.get(now)) {
+			for(int i=0; i<s; i++) {
 				
-				indegree[a]--;
-				if(indegree[a] == 0) {
-					find = true;
-					ans[a] = ans[now]+1;
-					q.add(a);
+				int now = q.poll();
+				for(int a : graph.get(now)) {
+					indegree[a]--;
+					if(indegree[a] == 0) {
+		
+						ans[a] = seq+1;
+						q.add(a);
+					}
 				}
 				
-			}
-			
 
+				
+			}
+
+		
 			
 		}
 		
