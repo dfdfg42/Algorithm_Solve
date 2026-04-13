@@ -31,13 +31,14 @@ int main() {
         fishPq.push(a);
     }
 
+
     //떡밥이 있으면 계속 잡음
     //물고기 없으면 종료
 
     while (!babPq.empty()) {
 
         int nowBap = babPq.top();
-        babPq.pop();
+
 
         //잡을 물고기 없으면 종료
         if (fishPq.empty()) {
@@ -47,11 +48,10 @@ int main() {
         if (fishPq.top() > nowBap) {
             catchFishPq.push(fishPq.top());
             fishPq.pop();
+            babPq.pop();
         }
-        else {
-            //가장 작은 떡밥보다 큰 물고기가 없으므로 종료
-            break;
-        }
+        
+        if (fishPq.empty()) break;
 
         //만약 떡밥이 비어있고 물고기로 더 큰 물고기를 잡을수 있으면
         //떡밥으로 만듬
