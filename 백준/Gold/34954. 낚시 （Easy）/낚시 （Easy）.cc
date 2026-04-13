@@ -35,34 +35,23 @@ int main() {
     //떡밥이 있으면 계속 잡음
     //물고기 없으면 종료
 
-    while (!babPq.empty()) {
+    while (!fishPq.empty()) {
 
-        int nowBap = babPq.top();
+        int targetFish = fishPq.top();
+        fishPq.pop();
 
-
-        //잡을 물고기 없으면 종료
-        if (fishPq.empty()) {
-            break;
-        }
-
-        if (fishPq.top() > nowBap) {
-            catchFishPq.push(fishPq.top());
-            fishPq.pop();
+        
+        if (!babPq.empty() && babPq.top() < targetFish) {
             babPq.pop();
+            catchFishPq.push(targetFish);
+        }
+        else if (!catchFishPq.empty() && catchFishPq.top() < targetFish) {
+            catchFishPq.pop();
+            catchFishPq.push(targetFish); 
         }
         
-        if (fishPq.empty()) break;
 
-        //만약 떡밥이 비어있고 물고기로 더 큰 물고기를 잡을수 있으면
-        //떡밥으로 만듬
-        if (babPq.empty() && !catchFishPq.empty() && !fishPq.empty()) {
-
-            int tempBab = catchFishPq.top();
-            catchFishPq.pop();
-            babPq.push(tempBab);
-;
-        }
-
+        
     }
     
     ll ans = 0;
