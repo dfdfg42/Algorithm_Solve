@@ -12,7 +12,7 @@ int solution(vector<int> sticker)
     int answer =0;
     n = sticker.size();
     
-    if(n ==1 ){
+    if(n == 1 ){
         return sticker[0];
     }
     
@@ -21,11 +21,10 @@ int solution(vector<int> sticker)
     vector<int> dp1 (n,0);
     
     dp1[0] = sticker[0];
-    dp1[1] = max(sticker[0], sticker[1]);
+    dp1[1] = dp1[0];
     
     //0번 인덱스를 골랐을 때
     for(int i=2; i<n-1; i++){
-        
         dp1[i] = max(dp1[i-2] + sticker[i], dp1[i-1]);
     }
     
