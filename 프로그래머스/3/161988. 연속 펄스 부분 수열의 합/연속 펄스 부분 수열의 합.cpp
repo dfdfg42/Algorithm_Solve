@@ -26,7 +26,6 @@ ll solution(vector<int> sequence) {
     //누적합이 음수가되면 바로 새롭게 출발
     ll sum = 0;
     // 1로 시작하는 친구
-    int l = 0; 
     int r = 0;
     ll tempSum = 0 ;
     while(r != n){
