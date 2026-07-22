@@ -14,7 +14,7 @@ class Solution {
             
             if(s.contains(words[i]) || words[i].charAt(0) != prevWord.charAt(prevWord.length()-1)){
                 System.out.println(i);
-                return new int[] {(i+1)-(i/n)*n ,(i+n)/n};
+                return new int[] {i%n +1 ,(i+n)/n};
             }else{
                 s.add(words[i]);
                 prevWord = words[i];
