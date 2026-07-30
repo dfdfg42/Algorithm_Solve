@@ -16,9 +16,7 @@ class Solution {
                 if(deployCnt > 0) ans.add(deployCnt);
                 deployCnt = 0;
                 
-                while(progresses[i] + (speeds[i]*day) < 100){
-                    day++;
-                }
+                day += (int)Math.ceil((100.0 - (progresses[i] + speeds[i]*day))/speeds[i]);
                 
                 deployCnt++;
                 
